@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ForgotPasswordMail;
 use App\Http\Requests\ResetPassword;
 use App\Models\User;
+
 class AuthController extends Controller
 {
-   
+
     public function loadRegister()
     {
         if (Auth::user()) {
@@ -172,4 +173,27 @@ class AuthController extends Controller
         return redirect('/backRoute')->with('success', 'Password has been reset.');
     }
 
+    public function getAuthenticatedUserRole()
+    {
+        if (Auth::user()) {
+            $user = Auth::user(); // Get the authenticated user
+            return response()->json([
+                'role' => $user->roles->name, // Assuming roles is a relationship and name is the role name
+                'name' => $user->name,
+            ]);
+        } else {
+            return response()->json(['error' => true]);
+        }
+    }
+
+    public function getMyid()
+    {
+        if (Auth::user()) {
+            return response()->json([
+                'id' => Auth::user()->id,
+            ]);
+        } else {
+            return response()->json(['error' => true]);
+        }
+    }
 }

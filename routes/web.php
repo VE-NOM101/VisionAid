@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +22,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('front.app');
 });
+
+Route::get('/check', function () {
+    return view('welcome');
+});
+
 
 
 Route::get('/backRoute', [AuthController::class, 'loadLogin']);
@@ -41,12 +50,40 @@ Route::post('/forgot', [Authcontroller::class, 'forgot'])->name('forgot');
 Route::get('/reset/{email}/{token}', [AuthController::class, 'getReset']);
 Route::post('/reset/{email}/{token}', [AuthController::class, 'postReset']);
 
+//Global Api
+Route::get('/api/auth/role', [AuthController::class, 'getAuthenticatedUserRole']);
+Route::get('/api/getMyid',[AuthController::class, 'getMyid']);
 
 //google login
 
 Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('google-auth');
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callBackGoogle']);
 
+
+
+//Admin
+Route::group(['prefix' => 'api/_admin', 'middleware' => ['web', 'isAdmin']], function () {
+    //users
+    // Route::get('/dashboard', [AdminController::class, 'dashboard']);
+    Route::get('/getUsers', [AdminController::class, 'getUsers']);
+
+    Route::patch('/{id}/changeRole', [AdminController::class, 'changeRole']);
+});
+
+
+//Doctor
+Route::group(['prefix' => 'api/_doctor', 'middleware' => ['web', 'isDoctor']], function () {
+    // Route::get('/dashboard', [DoctorController::class, 'dashboard']);
+
+});
+
+//User
+Route::group(['prefix' => 'api/_user', 'middleware' => ['web', 'isUser']], function () {
+    // Route::get('/dashboard', [UserController::class, 'dashboard']);
+});
+
 // Route::get('{any?}', function() {
-//     return view('welcome');
+//     return redirect('/login');
 // })->where('any', '.*');
+
+Route::get('{view}', ApplicationController::class)->where('view', '(.*)');

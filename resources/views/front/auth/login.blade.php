@@ -12,7 +12,7 @@
       <form action="{{ route('login') }}" method="POST">
         @csrf
         <div class="input-group mb-3">
-            <input type="email" name="email" class="form-control"
+            <input placeholder="Email" type="email" name="email" class="form-control"
             id="yourUsername" required value={{old('email')}}>
           <div class="input-group-append">
             <div class="input-group-text">
@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-            <input type="password" name="password" class="form-control"
+            <input placeholder="Password" type="password" name="password" class="form-control"
             id="yourPassword" required>
           <div class="input-group-append">
             <div class="input-group-text">
