@@ -1,21 +1,21 @@
 @extends('front.layout')
 
 @section('carousel')
-<div class="header-carousel owl-carousel">
-    <div class="header-carousel-item">
-        <img src="{{ asset('front/img/carousel-1.jpg') }}" class="img-fluid w-100" alt="Image">
-        <div class="carousel-caption">
-            <div class="carousel-caption-content p-3">
-                <h5 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Physiotherapy Center</h5>
-                <h1 class="display-1 text-capitalize text-white mb-4">Best Solution For Painful Life</h1>
-                <p class="mb-5 fs-5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                    Ipsum has been the industry's standard dummy text ever since the 1500s,
-                </p>
-                <a class="btn btn-primary rounded-pill text-white py-3 px-5" href="#">Book Appointment</a>
+    <div class="header-carousel owl-carousel">
+        <div class="header-carousel-item">
+            <img src="{{ asset('front/img/carousel-1.jpg') }}" class="img-fluid w-100" alt="Image">
+            <div class="carousel-caption">
+                <div class="carousel-caption-content p-3">
+                    <h5 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Physiotherapy Center</h5>
+                    <h1 class="display-1 text-capitalize text-white mb-4">Best Solution For Painful Life</h1>
+                    <p class="mb-5 fs-5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                        Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    </p>
+                    <a class="btn btn-primary rounded-pill text-white py-3 px-5" href="#">Book Appointment</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('content')
@@ -203,8 +203,8 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="video h-100">
-                                    <img src="{{asset('front/img/video-img.jpg')}}" class="img-fluid rounded w-100 h-100"
-                                        style="object-fit: cover;" alt="">
+                                    <img src="{{ asset('front/img/video-img.jpg') }}"
+                                        class="img-fluid rounded w-100 h-100" style="object-fit: cover;" alt="">
                                     <button type="button" class="btn btn-play" data-bs-toggle="modal"
                                         data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-bs-target="#videoModal">
                                         <span></span>
@@ -307,7 +307,8 @@
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="team-item rounded">
                         <div class="team-img rounded-top h-100">
-                            <img src="{{asset('front/img/team-1.jpg')}}" class="img-fluid rounded-top w-100" alt="">
+                            <img src="{{ asset('front/img/team-1.jpg') }}" class="img-fluid rounded-top w-100"
+                                alt="">
                             <div class="team-icon d-flex justify-content-center">
                                 <a class="btn btn-square btn-primary text-white rounded-circle mx-1" href=""><i
                                         class="fab fa-facebook-f"></i></a>
@@ -328,7 +329,8 @@
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item rounded">
                         <div class="team-img rounded-top h-100">
-                            <img src="{{asset('front/img/team-2.jpg')}}" class="img-fluid rounded-top w-100" alt="">
+                            <img src="{{ asset('front/img/team-2.jpg') }}" class="img-fluid rounded-top w-100"
+                                alt="">
                             <div class="team-icon d-flex justify-content-center">
                                 <a class="btn btn-square btn-primary text-white rounded-circle mx-1" href=""><i
                                         class="fab fa-facebook-f"></i></a>
@@ -349,7 +351,8 @@
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="team-item rounded">
                         <div class="team-img rounded-top h-100">
-                            <img src="{{asset('front/img/team-3.jpg')}}" class="img-fluid rounded-top w-100" alt="">
+                            <img src="{{ asset('front/img/team-3.jpg') }}" class="img-fluid rounded-top w-100"
+                                alt="">
                             <div class="team-icon d-flex justify-content-center">
                                 <a class="btn btn-square btn-primary text-white rounded-circle mx-1" href=""><i
                                         class="fab fa-facebook-f"></i></a>
@@ -370,7 +373,8 @@
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.7s">
                     <div class="team-item rounded">
                         <div class="team-img rounded-top h-100">
-                            <img src="{{asset('front/img/team-4.jpg')}}" class="img-fluid rounded-top w-100" alt="">
+                            <img src="{{ asset('front/img/team-4.jpg') }}" class="img-fluid rounded-top w-100"
+                                alt="">
                             <div class="team-icon d-flex justify-content-center">
                                 <a class="btn btn-square btn-primary text-white rounded-circle mx-1" href=""><i
                                         class="fab fa-facebook-f"></i></a>

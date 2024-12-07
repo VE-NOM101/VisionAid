@@ -1,45 +1,7 @@
-// import './bootstrap';
-// import 'admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js';
-// import 'admin-lte/dist/js/adminlte.min.js';
-
-// import { createApp } from 'vue/dist/vue.esm-bundler.js';
-// import { createRouter, createWebHistory } from 'vue-router';
-// import AdminRoutes from './adminRoutes.js'
-// import DoctorRoutes from './doctorRoutes.js'
-// import UserRoutes from './userRoutes.js'
-// import Admin from './Admin.vue'
-// import Doctor from './Doctor.vue';
-// import User from './User.vue';
-
-// const admin = createApp(Admin);
-// const doctor = createApp(Doctor);
-// const user = createApp(User);
-// const routerAdmin = createRouter({
-//     routes: AdminRoutes,
-//     history: createWebHistory(),
-// });
-// // const routerDoctor = createRouter({
-// //     routes: DoctorRoutes,
-// //     history: createWebHistory(),
-// // });
-
-// // const routerUser = createRouter({
-// //     routes: UserRoutes,
-// //     history: createWebHistory(),
-// // });
-
-// admin.use(routerAdmin);
-// admin.mount('#admin');
-
-// // doctor.use(routerDoctor);
-// // doctor.mount('#doctor');
-
-// // user.use(routerUser);
-// // user.mount('#user');
-
 import './bootstrap';
 import 'admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js';
 import 'admin-lte/dist/js/adminlte.min.js';
+
 
 import { createApp } from 'vue/dist/vue.esm-bundler.js';
 import { createRouter, createWebHistory } from 'vue-router';

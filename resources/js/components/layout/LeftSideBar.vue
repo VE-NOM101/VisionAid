@@ -97,6 +97,14 @@ export default {
                             </p>
                         </router-link>
                     </li>
+                    <li class="nav-item">
+                        <router-link to="/_admin/symptoms" active-class="active" class="nav-link">
+                            <i class="fa-solid fa-virus"></i>
+                            <p>
+                                Symptoms
+                            </p>
+                        </router-link>
+                    </li>
                 </ul>
 
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -119,10 +127,19 @@ export default {
                     <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <router-link to="" active-class="active" class="nav-link">
+                        <router-link to="/_user/dashboard" active-class="active" class="nav-link">
                             <i class="nav-icon fas fa-th"></i>
                             <p>
                                 Dashboard
+                            </p>
+                        </router-link>
+                    </li>
+
+                    <li class="nav-item">
+                        <router-link to="/_user/quicktest" active-class="active" class="nav-link">
+                            <i class="fa-solid fa-eye"></i>
+                            <p>
+                                QuickTest
                             </p>
                         </router-link>
                     </li>

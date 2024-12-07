@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\AdminAuth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,6 +62,8 @@ Route::get('/auth/google/callback', [GoogleAuthController::class, 'callBackGoogl
 
 
 
+
+
 //Admin
 Route::group(['prefix' => 'api/_admin', 'middleware' => ['web', 'isAdmin']], function () {
     //users
@@ -68,6 +71,13 @@ Route::group(['prefix' => 'api/_admin', 'middleware' => ['web', 'isAdmin']], fun
     Route::get('/getUsers', [AdminController::class, 'getUsers']);
 
     Route::patch('/{id}/changeRole', [AdminController::class, 'changeRole']);
+
+    Route::get('/getDisease', [AdminController::class, 'getDisease']);
+    Route::post('/updateDiseases', [AdminController::class, 'updateDiseases']);
+
+    Route::post('/upload_symptom/{id}',[AdminController::class,'upload_symptom']);
+
+    Route::get('/get_symptoms/{id}',[AdminController::class,'getSymptoms']);
 });
 
 
@@ -80,6 +90,12 @@ Route::group(['prefix' => 'api/_doctor', 'middleware' => ['web', 'isDoctor']], f
 //User
 Route::group(['prefix' => 'api/_user', 'middleware' => ['web', 'isUser']], function () {
     // Route::get('/dashboard', [UserController::class, 'dashboard']);
+
+    Route::get('/getQuestions',[UserController::class,'getQuestions']);
+
+    Route::post('/textProcessing',[UserController::class,'testProcessing']);
+    Route::get('/getQuicktest',[UserController::class,'getQuicktest']);
+
 });
 
 // Route::get('{any?}', function() {

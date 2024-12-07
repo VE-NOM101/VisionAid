@@ -29,6 +29,9 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('front/css/style.css') }}" rel="stylesheet">
+
+   <link href="{{asset('modal.css')}}" rel="stylesheet">
+
 </head>
 
 <body>
@@ -88,13 +91,14 @@
                     <a href="index.html" class="nav-item nav-link active">Home</a>
 
                     <a class="nav-item nav-link" href="/login">
-                            @if (Auth::user())
-                                {{ 'Dashboard' }}@else{{ 'Log in' }}
-                            @endif</a>
+                        @if (Auth::user())
+                            {{ 'Dashboard' }}@else{{ 'Log in' }}
+                        @endif
+                    </a>
                     @if (Auth::user())
-                        <a class="nav-item nav-link"  href="/logout"><span>Log Out</span></a>
+                        <a class="nav-item nav-link" href="/logout"><span>Log Out</span></a>
                     @else
-                        <a class="nav-item nav-link"  href="/register"><span>Sign Up</span></a>
+                        <a class="nav-item nav-link" href="/register"><span>Sign Up</span></a>
                     @endif
 
 
