@@ -53,7 +53,7 @@ Route::post('/reset/{email}/{token}', [AuthController::class, 'postReset']);
 
 //Global Api
 Route::get('/api/auth/role', [AuthController::class, 'getAuthenticatedUserRole']);
-Route::get('/api/getMyid',[AuthController::class, 'getMyid']);
+Route::get('/api/getMyid', [AuthController::class, 'getMyid']);
 
 //google login
 
@@ -75,9 +75,12 @@ Route::group(['prefix' => 'api/_admin', 'middleware' => ['web', 'isAdmin']], fun
     Route::get('/getDisease', [AdminController::class, 'getDisease']);
     Route::post('/updateDiseases', [AdminController::class, 'updateDiseases']);
 
-    Route::post('/upload_symptom/{id}',[AdminController::class,'upload_symptom']);
+    Route::post('/upload_symptom/{id}', [AdminController::class, 'upload_symptom']);
 
-    Route::get('/get_symptoms/{id}',[AdminController::class,'getSymptoms']);
+    Route::get('/get_symptoms/{id}', [AdminController::class, 'getSymptoms']);
+
+
+    Route::get('/get-info', [AuthController::class, 'getInfo']);
 });
 
 
@@ -91,11 +94,10 @@ Route::group(['prefix' => 'api/_doctor', 'middleware' => ['web', 'isDoctor']], f
 Route::group(['prefix' => 'api/_user', 'middleware' => ['web', 'isUser']], function () {
     // Route::get('/dashboard', [UserController::class, 'dashboard']);
 
-    Route::get('/getQuestions',[UserController::class,'getQuestions']);
+    Route::get('/getQuestions', [UserController::class, 'getQuestions']);
 
-    Route::post('/textProcessing',[UserController::class,'testProcessing']);
-    Route::get('/getQuicktest',[UserController::class,'getQuicktest']);
-
+    Route::post('/textProcessing', [UserController::class, 'testProcessing']);
+    Route::get('/getQuicktest', [UserController::class, 'getQuicktest']);
 });
 
 // Route::get('{any?}', function() {

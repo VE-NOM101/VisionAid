@@ -448,7 +448,7 @@ export default {
     </div>
 </template>
 
-<style>
+<style scoped>
 .profile-user-img:hover {
     background-color: yellow;
     cursor: pointer;

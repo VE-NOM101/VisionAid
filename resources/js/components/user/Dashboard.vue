@@ -169,6 +169,16 @@ export default {
             modalElement.addEventListener('hidden.bs.modal', () => toggleInert(false));
         });
 
+        const openFileInput = (id) => {
+            const input = document.getElementById(`${id}`);
+            if (input) input.click();
+        };
+
+        const handleDeepTest = () =>{
+            hideModal("modal-report");
+            showModal("modal-deeptest");
+        };
+
         // Clean up when the component is unmounted
         onUnmounted(() => {
             toggleInert(false);
@@ -186,6 +196,8 @@ export default {
             disease_list,
             disease_percentiles,
             highestPercentileIndex,
+            openFileInput,
+            handleDeepTest,
         };
     },
 };
@@ -209,6 +221,23 @@ export default {
                         <!-- Button Container -->
                         <div class="d-flex align-items-center justify-content-center" style="flex-grow: 1;">
                             <button type="button" class="btn btn-white" @click="showModal('modal-question')">
+                                <b>Click Here</b> <i class="fas fa-arrow-circle-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-danger d-flex flex-column justify-content-between" style="height: 100%;">
+                        <div class="inner">
+                            <h3>DeepTest</h3>
+
+                            <p>More Reliable</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa-solid fa-hexagon-nodes"></i>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center" style="flex-grow: 1;">
+                            <button type="button" class="btn btn-white" @click="showModal('modal-deeptest')">
                                 <b>Click Here</b> <i class="fas fa-arrow-circle-right"></i>
                             </button>
                         </div>
@@ -259,6 +288,9 @@ export default {
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Result Analysis</h4>
+                    <div v-if="highestPercentileIndex == 1" class="callout callout-success">
+                        <h5 style="color:firebrick;">You can take treatment from us!!</h5>
+                    </div>
                     <button type="button" class="close" @click="hideModal('modal-report')" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -277,12 +309,54 @@ export default {
                     </ul>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-dark" @click="hideModal('modal-report')">Close</button>
-                    <button type="button" class="btn btn-primary">Approach Next ?</button>
+                    <button type="button" class="btn btn-danger" @click="hideModal('modal-report')">Close</button>
+                    <button v-if="highestPercentileIndex == 1" type="button" class="btn btn-primary" @click="handleDeepTest">Approach Next
+                        ?</button>
+                    <button v-else type="button" class="btn btn-primary">Suggestions for you</button>
+
                 </div>
             </div>
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
     </div>
+
+
+    <div class="modal fade" id="modal-deeptest">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">DeepTest!</h4>
+                    <button type="button" class="close" @click="hideModal('modal-deeptest')" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5 class="text-dark">Welcome</h5>
+
+                    <div class="image-container mt-3">
+                        <input type="file" class="d-none" id="deepimage" />
+                        <img @click="openFileInput('deepimage')" class="profile-user-img img-fluid rounded-circle border mt-2"
+                            style="width: 200px; height: 200px; cursor: pointer; border: 4px solid #ccc;"
+                            src="/dashboard/dist/img/user4-128x128.jpg" alt="SymptomImage" />
+                    </div>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-danger" @click="hideModal('modal-deeptest')">Close</button>
+                    <button type="button" class="btn btn-primary">Next</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
 </template>
+<style scoped>
+.profile-user-img:hover {
+    background-color: rgb(218, 1, 102);
+    cursor: pointer;
+}
+</style>
