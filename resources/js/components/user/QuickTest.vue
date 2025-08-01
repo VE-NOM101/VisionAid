@@ -43,8 +43,8 @@ export default {
             }
         };
 
-         // Format the date in 12-hour system
-         const formatDate = (isoString) => {
+        // Format the date in 12-hour system
+        const formatDate = (isoString) => {
             if (!isoString) return "N/A";
             const date = new Date(isoString);
 
@@ -90,62 +90,70 @@ export default {
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Records</h3>
+                        <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                            <h3 class="card-title mb-2">Records</h3>
                         </div>
                         <div class="card-body">
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">No</th>
-                                        <th v-for="(disease, index) in disease_list" :key="index">
-                                            {{ disease.disease_name }}
-                                        </th>
-                                        <th>Time</th>
-                                    </tr>
-                                </thead>
-                                <tbody v-if="paginatedRecords.length > 0">
-                                    <tr v-for="(record, index) in paginatedRecords" :key="index">
-                                        <td class="text-center">
-                                            {{ (currentPage - 1) * itemsPerPage + index + 1 }}
-                                        </td>
-                                        <td class="text-center">{{ record.percentage_disease_1 }}%</td>
-                                        <td class="text-center">{{ record.percentage_disease_2 }}%</td>
-                                        <td class="text-center">{{ record.percentage_disease_3 }}%</td>
-                                        <td class="text-center">{{ formatDate(record.updated_at) }}</td>
-                                    </tr>
-                                </tbody>
-                                <tbody v-else>
-                                    <tr>
-                                        <td colspan="4" class="text-center">No user data found</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th class="text-center">No</th>
-                                        <th v-for="(disease, index) in disease_list" :key="index">
-                                            {{ disease.disease_name }}
-                                        </th>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                            <!-- Responsive table wrapper -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th v-for="(disease, index) in disease_list" :key="index">
+                                                {{ disease.disease_name }}
+                                            </th>
+                                            <th class="text-center">Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-if="paginatedRecords.length > 0">
+                                        <tr v-for="(record, index) in paginatedRecords" :key="index">
+                                            <td class="text-center">
+                                                {{ (currentPage - 1) * itemsPerPage + index + 1 }}
+                                            </td>
+                                            <td class="text-center">{{ record.percentage_disease_1 }}%</td>
+                                            <td class="text-center">{{ record.percentage_disease_2 }}%</td>
+                                            <td class="text-center">{{ record.percentage_disease_3 }}%</td>
+                                            <td class="text-center">{{ formatDate(record.updated_at) }}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody v-else>
+                                        <tr>
+                                            <td :colspan="disease_list.length + 2" class="text-center">
+                                                No user data found
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot class="thead-dark">
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th v-for="(disease, index) in disease_list" :key="index">
+                                                {{ disease.disease_name }}
+                                            </th>
+                                            <th class="text-center">Time</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
 
                             <!-- Pagination Controls -->
-                            <div class="pagination mt-3 text-center">
-                                <button class="btn btn-dark mx-2" @click="changePage(currentPage - 1)"
+                            <div class="d-flex justify-content-center align-items-center flex-wrap mt-3">
+                                <button class="btn btn-dark mx-2 mb-2" @click="changePage(currentPage - 1)"
                                     :disabled="currentPage === 1">
                                     <i class="fas fa-arrow-left"></i>
                                 </button>
-                                <span>Page {{ currentPage }} of {{ totalPages }}</span>
-                                <button class="btn btn-dark mx-2" @click="changePage(currentPage + 1)"
+                                <span class="mx-2 mb-2">Page {{ currentPage }} of {{ totalPages }}</span>
+                                <button class="btn btn-dark mx-2 mb-2" @click="changePage(currentPage + 1)"
                                     :disabled="currentPage === totalPages">
                                     <i class="fas fa-arrow-right"></i>
                                 </button>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
 </template>

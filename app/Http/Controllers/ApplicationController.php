@@ -20,4 +20,11 @@ class ApplicationController extends Controller
             return redirect('/backRoute');
         }
     }
+
+
+    public function getProfileInfo(){
+        $user = Auth::user();
+
+        
+    }
 }

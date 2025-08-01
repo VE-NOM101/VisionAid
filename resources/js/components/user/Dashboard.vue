@@ -25,6 +25,81 @@ export default {
         const disease_list = ref([]);
         const disease_percentiles = ref([]);
 
+        const retina_image = ref(
+            { image: null, imagePreview: null }
+        );
+
+        const prediction = ref({
+            received: false,
+            data: null,
+        });
+
+
+        const handleFileChange = (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                retina_image.value.image = file;
+                retina_image.value.imagePreview = URL.createObjectURL(file);
+            }
+        };
+
+        const retina_image_upload = () => {
+            if (retina_image.value.image == null) {
+                toastr.error("No image found");
+                return; // Stop execution if validation fails
+            }
+
+            const formData = new FormData();
+            if (retina_image.value.image instanceof File) {
+                formData.append('retina_image', retina_image.value.image);
+                // Image should be a File object
+            }
+
+            axios
+                .post(`/api/_user/upload-retina-image`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                })
+                .then((response) => {
+                    toastr.success(response.data.message);
+                    prediction.value = {
+                        received: true,
+                        data: response.data.response,
+                    };
+                    console.log(prediction.value);
+                })
+                .catch((error) => {
+                    toastr.error("Failed to upload Retina image.");
+                    console.error("Error uploading retina image:", error);
+                });
+        };
+
+        const predictionText = computed(() => {
+            const labels = [
+                "No Diabetic Retinopathy",
+                "Mild Diabetic Retinopathy",
+                "Moderate Diabetic Retinopathy",
+                "Severe Diabetic Retinopathy",
+                "Proliferative Diabetic Retinopathy",
+            ];
+            return labels[prediction.value.data.prediction] || "Unknown Prediction";
+        });
+
+
+        const upload_prediction_data = () => {
+            axios
+                .post(`/api/_user/upload-prediction-data`, { 'prediction': prediction.value.data })
+                .then((response) => {
+                    toastr.success(response.data.message);
+                    console.log(response.data.prediction_id);
+                })
+                .catch((error) => {
+                    toastr.error("Failed to upload prediction.");
+                    console.error("Error uploading prediction data:", error);
+                });
+        };
+
         // Check if the current question is the last one
         const isLastQuestion = computed(() => currentIndex.value === questions.value.length - 1);
 
@@ -140,6 +215,7 @@ export default {
             $(`#${modal}`).modal('show');
             toggleInert(true); // Disable main content
             nextTick(() => document.getElementById('modal-question').focus()); // Focus the modal
+
         };
 
         // Hide modal
@@ -147,6 +223,8 @@ export default {
             $(`#${modal}`).modal('hide');
             toggleInert(false); // Re-enable main content
             nextTick(() => previousActiveElement.value?.focus()); // Restore focus to the triggering element
+            prediction.value.received = false;
+            prediction.value.data = null;
         };
 
         // API call to fetch questions
@@ -174,7 +252,7 @@ export default {
             if (input) input.click();
         };
 
-        const handleDeepTest = () =>{
+        const handleDeepTest = () => {
             hideModal("modal-report");
             showModal("modal-deeptest");
         };
@@ -198,6 +276,12 @@ export default {
             highestPercentileIndex,
             openFileInput,
             handleDeepTest,
+            retina_image,
+            handleFileChange,
+            retina_image_upload,
+            prediction,
+            predictionText,
+            upload_prediction_data,
         };
     },
 };
@@ -310,7 +394,8 @@ export default {
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-danger" @click="hideModal('modal-report')">Close</button>
-                    <button v-if="highestPercentileIndex == 1" type="button" class="btn btn-primary" @click="handleDeepTest">Approach Next
+                    <button v-if="highestPercentileIndex == 1" type="button" class="btn btn-primary"
+                        @click="handleDeepTest">Approach Next
                         ?</button>
                     <button v-else type="button" class="btn btn-primary">Suggestions for you</button>
 
@@ -326,25 +411,34 @@ export default {
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">DeepTest!</h4>
+                    <h4 class="modal-title" style="color:green;">DeepTest!</h4>
                     <button type="button" class="close" @click="hideModal('modal-deeptest')" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body text-center">
-                    <h5 class="text-dark">Welcome</h5>
 
-                    <div class="image-container mt-3">
-                        <input type="file" class="d-none" id="deepimage" />
-                        <img @click="openFileInput('deepimage')" class="profile-user-img img-fluid rounded-circle border mt-2"
-                            style="width: 200px; height: 200px; cursor: pointer; border: 4px solid #ccc;"
-                            src="/dashboard/dist/img/user4-128x128.jpg" alt="SymptomImage" />
-                    </div>
+                <div class="modal-body text-center" id="image_box" v-if="!prediction.received">
+                    <h5 class="" style="color:red;">Efficient and Trustable</h5>
+
+                    <input type="file" class="d-none" id="retina_image_id" @change="handleFileChange($event)" />
+                    <img @click="openFileInput('retina_image_id')" class="profile-user-img img-fluid rounded mt-2"
+                        style="width: 320px; height: 320px; cursor: pointer;"
+                        :src="retina_image.imagePreview || '/dashboard/dist/img/user4-128x128.jpg'"
+                        alt="'Retina Image Preview'" />
                 </div>
+                <div class="modal-body text-center" id="result_box" v-if="prediction.received">
+                    <h1 class="text-success">Prediction Results</h1>
+                    <h2 style="color: firebrick;">Prediction: {{ predictionText }}</h2>
+
+                </div>
+
 
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-danger" @click="hideModal('modal-deeptest')">Close</button>
-                    <button type="button" class="btn btn-primary">Next</button>
+                    <button type="button" class="btn btn-primary" v-if="!prediction.received"
+                        @click="retina_image_upload">Next</button>
+                    <button type="button" class="btn btn-success" v-if="prediction.received"
+                        @click="upload_prediction_data">Suggestions?</button>
                 </div>
             </div>
             <!-- /.modal-content -->

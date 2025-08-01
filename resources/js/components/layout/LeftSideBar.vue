@@ -77,6 +77,7 @@ export default {
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
+                <!--Admin-->
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false" v-if="detail.role === 'admin'">
                     <!-- Add icons to the links using the .nav-icon class
@@ -105,8 +106,16 @@ export default {
                             </p>
                         </router-link>
                     </li>
+                    <li class="nav-item">
+                        <router-link to="/_admin/profile" active-class="active" class="nav-link">
+                            <i class="fa-regular fa-user"></i>
+                            <p>
+                                Profile
+                            </p>
+                        </router-link>
+                    </li>
                 </ul>
-
+                <!--Doctor-->
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false" v-if="detail.role === 'doctor'">
                     <!-- Add icons to the links using the .nav-icon class
@@ -119,9 +128,17 @@ export default {
                             </p>
                         </router-link>
                     </li>
+                    <li class="nav-item">
+                        <router-link to="/_doctor/profile" active-class="active" class="nav-link">
+                            <i class="fa-regular fa-user"></i>
+                            <p>
+                                Profile
+                            </p>
+                        </router-link>
+                    </li>
                 </ul>
 
-
+                <!--User-->
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false" v-if="detail.role === 'user'">
                     <!-- Add icons to the links using the .nav-icon class
@@ -140,6 +157,40 @@ export default {
                             <i class="fa-solid fa-eye"></i>
                             <p>
                                 QuickTest
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/_user/deeptest" active-class="active" class="nav-link">
+                            <i class="fa-solid fa-flask"></i>
+                            <p>
+                                Deeptest
+                            </p>
+                        </router-link>
+                    </li>
+
+                    <li class="nav-item">
+                        <router-link to="/_user/progression-tracking" active-class="active" class="nav-link">
+                            <i class="fa-solid fa-spinner"></i>
+                            <p>
+                                Progression Tracking
+                            </p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/_user/try-on" active-class="active" class="nav-link">
+                            <i class="fa-solid fa-vr-cardboard"></i>
+                            <p>
+                                Try-On
+                            </p>
+                        </router-link>
+                    </li>
+
+                    <li class="nav-item">
+                        <router-link to="/_user/profile" active-class="active" class="nav-link">
+                            <i class="fa-regular fa-user"></i>
+                            <p>
+                                Profile
                             </p>
                         </router-link>
                     </li>

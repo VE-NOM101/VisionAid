@@ -4,8 +4,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\GeminiController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VirtualTryOn;
 use App\Http\Middleware\AdminAuth;
 use Illuminate\Support\Facades\Route;
 
@@ -61,8 +63,9 @@ Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('goo
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callBackGoogle']);
 
 
+Route::get('/get-profile-info', [ApplicationController::class, 'getProfileInfo']);
 
-
+Route::post('/api/gemini', [GeminiController::class, 'generateContent']);
 
 //Admin
 Route::group(['prefix' => 'api/_admin', 'middleware' => ['web', 'isAdmin']], function () {
@@ -80,7 +83,8 @@ Route::group(['prefix' => 'api/_admin', 'middleware' => ['web', 'isAdmin']], fun
     Route::get('/get_symptoms/{id}', [AdminController::class, 'getSymptoms']);
 
 
-    Route::get('/get-info', [AuthController::class, 'getInfo']);
+    Route::get('/get-info', [AdminController::class, 'getInfo']);
+    
 });
 
 
@@ -93,11 +97,22 @@ Route::group(['prefix' => 'api/_doctor', 'middleware' => ['web', 'isDoctor']], f
 //User
 Route::group(['prefix' => 'api/_user', 'middleware' => ['web', 'isUser']], function () {
     // Route::get('/dashboard', [UserController::class, 'dashboard']);
-
+    Route::post('/store-track-data',[UserController::class,'storeTrackData']);
+    Route::get('/get-track-data',[UserController::class,'getTrackData']);
     Route::get('/getQuestions', [UserController::class, 'getQuestions']);
 
     Route::post('/textProcessing', [UserController::class, 'testProcessing']);
     Route::get('/getQuicktest', [UserController::class, 'getQuicktest']);
+    Route::post('/upload-retina-image', [UserController::class, 'upload_retina_image']);
+
+    Route::post('/upload-prediction-data', [UserController::class, 'upload_prediction_data']);
+    
+    Route::get('/getDeeptest', [UserController::class, 'getDeeptest']);
+
+    Route::post('/save-query', [UserController::class, 'saveQuery']);
+
+    Route::get('/get-prediction-data/{prediction_id}', [UserController::class, 'get_prediction_data']);
+    Route::get('/delete-suggestion/{suggestion_id}', [UserController::class, 'delete_suggestion']);
 });
 
 // Route::get('{any?}', function() {

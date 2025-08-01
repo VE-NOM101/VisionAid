@@ -6,6 +6,9 @@ import 'admin-lte/dist/js/adminlte.min.js';
 import { createApp } from 'vue/dist/vue.esm-bundler.js';
 import { createRouter, createWebHistory } from 'vue-router';
 
+import { createPinia } from 'pinia'
+const pinia = createPinia()
+
 // Import Routes and Components
 import AdminRoutes from './adminRoutes.js';
 import DoctorRoutes from './doctorRoutes.js';
@@ -34,6 +37,7 @@ getAuthenticatedUserRole().then((role) => {
             history: createWebHistory(),
         });
         admin.use(routerAdmin);
+        admin.use(pinia);
         admin.mount('#admin');
     } else if (role === 'doctor') {
         const doctor = createApp(Doctor);
@@ -42,6 +46,7 @@ getAuthenticatedUserRole().then((role) => {
             history: createWebHistory(),
         });
         doctor.use(routerDoctor);
+        doctor.use(pinia);
         doctor.mount('#doctor');
     } else if (role === 'user') {
         const user = createApp(User);
@@ -50,6 +55,7 @@ getAuthenticatedUserRole().then((role) => {
             history: createWebHistory(),
         });
         user.use(routerUser);
+        user.use(pinia);
         user.mount('#user');
     } else {
         // Redirect to login if role is invalid or not found

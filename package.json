@@ -16,7 +16,10 @@
     "dependencies": {
         "admin-lte": "3.2",
         "chart.js": "^4.4.7",
+        "jeelizvtowidget": "^4.9.7",
         "jquery": "^3.7.1",
-        "vue-router": "4"
+        "pinia": "^3.0.3",
+        "vue-router": "4",
+        "vue3-spinners": "^1.3.1"
     }
 }

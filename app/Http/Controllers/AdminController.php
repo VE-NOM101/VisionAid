@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Disease;
+use App\Models\Quicktest;
 use App\Models\Symptom;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -296,5 +297,41 @@ class AdminController extends Controller
     {
         $symptoms = Symptom::where('disease_id', $id)->get();
         return response()->json($symptoms, 200);
+    }
+
+    public function getInfo() {
+
+        $disease_list = Disease::all();
+
+        // Initialize a frequency array
+        $frequencies = [
+            'disease_1' => 0,
+            'disease_2' => 0,
+            'disease_3' => 0,
+        ];
+
+        // Fetch all rows from the quicktests table
+        $quickTests = Quicktest::all();
+
+        foreach ($quickTests as $test) {
+            // Determine the disease with the highest percentage
+            $maxPercentage = max(
+                $test->percentage_disease_1,
+                $test->percentage_disease_2,
+                $test->percentage_disease_3
+            );
+
+            // Increment the frequency for the disease with the highest percentage
+            if ($maxPercentage === $test->percentage_disease_1) {
+                $frequencies['disease_1']++;
+            } elseif ($maxPercentage === $test->percentage_disease_2) {
+                $frequencies['disease_2']++;
+            } elseif ($maxPercentage === $test->percentage_disease_3) {
+                $frequencies['disease_3']++;
+            }
+        }
+
+        // Return the frequencies
+        return response()->json(['message' => 'Successfully retrieved', 'disease_list' => $disease_list, 'frequencies' => $frequencies]);
     }
 }
